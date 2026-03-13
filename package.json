@@ -1,0 +1,44 @@
+{
+  "name": "ebook_viewer",
+  "version": "1.0.0",
+  "description": "ebook_viewer for textbook",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "keywords": [
+    "electron",
+    "textbook",
+    "binder"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^35.2.0",
+    "electron-builder": "^24.4.0"
+  },
+  "build": {
+    "productName": "ebook_viewer",
+    "appId": "com.electron.binder",
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "output": "../run/",
+      "app": "."
+    }
+  },
+  "dependencies": {
+    "electron-browser-storage": "^1.0.7",
+    "node-fetch": "^2.7.0",
+    "unzipper": "^0.12.3"
+  }
+}
