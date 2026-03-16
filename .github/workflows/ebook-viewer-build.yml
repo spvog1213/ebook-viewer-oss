@@ -1,4 +1,4 @@
-name: ebook-viewer-build
+﻿name: ebook-viewer-build
 
 on:
   workflow_dispatch:
@@ -18,6 +18,8 @@ on:
       - 'GITHUB_RELEASE_TEMPLATE.md'
       - 'VERSIONING_GUIDE.md'
       - 'SIGNPATH_PROJECT_DESCRIPTION.md'
+      - 'CODE_SIGNING_POLICY.md'
+      - 'GITHUB_ACTIONS_SETUP.md'
 
 jobs:
   build:
@@ -39,16 +41,20 @@ jobs:
 
       - name: Build Windows package
         shell: powershell
-        run: npm run build
+        run: npm run build -- --publish never
+
+      - name: Collect build artifacts
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path .\artifacts | Out-Null
+          Copy-Item .\..\run\*.exe .\artifacts\ -Force -ErrorAction SilentlyContinue
+          Copy-Item .\..\run\*.yml .\artifacts\ -Force -ErrorAction SilentlyContinue
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ebook-viewer-build
-          path: |
-            ../run/*.exe
-            ../run/*.yml
-            ../run/win-unpacked/**
+          path: artifacts\**
           if-no-files-found: warn
 
       - name: Upload docs artifact
@@ -58,6 +64,8 @@ jobs:
           path: |
             README.md
             LICENSE
+            CODE_SIGNING_POLICY.md
+            GITHUB_ACTIONS_SETUP.md
             GITHUB_RELEASE_TEMPLATE.md
             VERSIONING_GUIDE.md
             SIGNPATH_PROJECT_DESCRIPTION.md
