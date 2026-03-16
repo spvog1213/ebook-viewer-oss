@@ -3,6 +3,9 @@ out/
 .tmp/
 artifacts/
 
+# Private local docs
+.sign/
+
 # Editor and OS files
 .vscode/
 .DS_Store
