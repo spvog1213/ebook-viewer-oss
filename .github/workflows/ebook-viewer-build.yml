@@ -1,0 +1,64 @@
+name: ebook-viewer-build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ebook-viewer-build.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'main.js'
+      - 'preload.js'
+      - 'launcher.html'
+      - 'loading.gif'
+      - 'README.md'
+      - 'LICENSE'
+      - 'GITHUB_RELEASE_TEMPLATE.md'
+      - 'VERSIONING_GUIDE.md'
+      - 'SIGNPATH_PROJECT_DESCRIPTION.md'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        shell: powershell
+        run: npm ci
+
+      - name: Build Windows package
+        shell: powershell
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ebook-viewer-build
+          path: |
+            ../run/*.exe
+            ../run/*.yml
+            ../run/win-unpacked/**
+          if-no-files-found: warn
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ebook-viewer-docs
+          path: |
+            README.md
+            LICENSE
+            GITHUB_RELEASE_TEMPLATE.md
+            VERSIONING_GUIDE.md
+            SIGNPATH_PROJECT_DESCRIPTION.md
+          if-no-files-found: error
