@@ -12,7 +12,7 @@
     "textbook",
     "binder"
   ],
-  "author": "ICECANDY R&D",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "electron": "^35.2.0",
@@ -23,13 +23,14 @@
     "appId": "com.electron.binder",
     "asar": true,
     "win": {
+      "requestedExecutionLevel": "requireAdministrator",
       "target": [
         "nsis"
       ]
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": false
     },
     "directories": {
       "output": "../run/",

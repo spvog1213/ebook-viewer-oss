@@ -1,1 +1,23 @@
-node_modules
+﻿# Build outputs
+out/
+.tmp/
+
+# Local workflow scratch
+workflows/
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# svn
+.svn/
+
+# node_modules
+node_modules/
+
+# sign
+.sign/
