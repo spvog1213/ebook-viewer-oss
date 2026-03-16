@@ -39,7 +39,7 @@ jobs:
 
       - name: Build Windows package
         shell: powershell
-        run: npm run build
+        run: npm run build -- --publish never
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
